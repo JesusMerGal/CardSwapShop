@@ -1,0 +1,20 @@
+ --Create Docker Mysql
+ docker run -d -p 33060:3306 --name mysql-db -e MYSQL_ROOT_PASSWORD=secret mysql
+
+--Enter Docker Mysql
+docker exec -it mysql-db mysql -p
+
+--Create Database
+Create database cardswapshop;
+
+--Interesting queries
+
+show tables;
+DESCRIBE card;
+ALTER TABLE card MODIFY image mediumblob;
+select * from user;
+select * from collection;
+select * from card;
+select * from card_collection;
+select * from card_user;
+delete from user where id = 103;
