@@ -1,6 +1,7 @@
 package com.cardswapshop.controller.collection;
 
 
+import com.cardswapshop.controller.collection.response.AllCollectionsResponse;
 import com.cardswapshop.model.Card;
 import com.cardswapshop.model.Collection;
 import com.cardswapshop.service.CollectionService;
@@ -23,13 +24,15 @@ public class CollectionController {
     private final CollectionService collectionService;
 
     @GetMapping("")
-    public ResponseEntity<List<Collection>> getAllCollections() {
+    public ResponseEntity<AllCollectionsResponse> getAllCollections() {
         List<Collection> allCollections = collectionService.findAll();
+        AllCollectionsResponse allCollectionsResponse = new AllCollectionsResponse();
+        allCollectionsResponse.setCollections(allCollections);
         if (allCollections == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         else if (allCollections.isEmpty())
-            return new ResponseEntity<>(allCollections, HttpStatus.NO_CONTENT);
-        return new ResponseEntity<>(allCollections, HttpStatus.OK);
+            return new ResponseEntity<>(allCollectionsResponse, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(allCollectionsResponse, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -47,8 +50,7 @@ public class CollectionController {
     ) {
         HttpHeaders headers = new HttpHeaders();
         if (collection == null) {
-            collectionService.save(collection);
-            return new ResponseEntity<>(collection, headers, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
         }
         collectionService.save(collection);
         return new ResponseEntity<>(collection, headers, HttpStatus.CREATED);
