@@ -57,7 +57,7 @@ public class CardController {
     @GetMapping("/all")
     public ResponseEntity<ListCardResponse> getAllCards(@RequestParam(required = false) String name
     ) {
-        if(name != null && !name.isEmpty()) {
+        if(name == null || name.isEmpty()) {
             ListCardResponse cards = service.findAll();
             if(cards == null){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
