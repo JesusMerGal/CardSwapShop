@@ -22,7 +22,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-
+    //Método para registrar al user, guardarlo en DB y generar el jwt token
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
                 .firstname(request.getFirstname())
@@ -38,6 +38,7 @@ public class AuthenticationService {
                 .build();
     }
 
+    //Método para login del user y generar el jwt token
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

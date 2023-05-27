@@ -23,6 +23,7 @@ import java.util.Optional;
 public class CollectionController {
     private final CollectionService collectionService;
 
+    //LLamada API para obtener todas las colecciones
     @GetMapping("")
     public ResponseEntity<AllCollectionsResponse> getAllCollections() {
         List<Collection> allCollections = collectionService.findAll();
@@ -35,6 +36,7 @@ public class CollectionController {
         return new ResponseEntity<>(allCollectionsResponse, HttpStatus.OK);
     }
 
+    //LLamada API para obtener colección con el id pasado por pathparam
     @GetMapping("/{id}")
     public ResponseEntity<Collection> getCollectionById(@PathVariable("id") Long id) {
         return collectionService
@@ -43,6 +45,7 @@ public class CollectionController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    //LLamada API para guardar una colección pasada en la request
     @PostMapping("")
     public ResponseEntity<Collection> saveCollection(
             @RequestBody Collection collection, BindingResult bindingResult,
@@ -56,6 +59,7 @@ public class CollectionController {
         return new ResponseEntity<>(collection, headers, HttpStatus.CREATED);
     }
 
+    //LLamada API para borrar la colección con id pasado por pathparam
     @DeleteMapping("/{id}")
     public ResponseEntity<Collection> deleteCollection(@PathVariable("id") Long id) {
         Optional<Collection> collectionToDelete = collectionService.findById(id);
@@ -65,6 +69,7 @@ public class CollectionController {
         return new ResponseEntity<>(collectionToDelete.get(), HttpStatus.NO_CONTENT);
     }
 
+    //LLamada API para actualizar la colección con id pasado por pathparam con los datos pasados por request
     @PutMapping("/{id}")
     public ResponseEntity<Collection> updateCollection(@PathVariable("id") Long id, @RequestBody Collection collection,
                                                        BindingResult bindingResult){

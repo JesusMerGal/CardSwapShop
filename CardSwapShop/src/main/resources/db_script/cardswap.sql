@@ -46,3 +46,19 @@ CREATE TABLE COLLECTION(
                         PRIMARY KEY (id)
 
 );
+
+CREATE TABLE CARD_COLLECTION(
+    collection_id INT NOT NULL,
+    card_id INT NOT NULL,
+    PRIMARY KEY (collection_id,card_id),
+    FOREIGN KEY (card_id) REFERENCES CARD(id),
+    FOREIGN KEY (collection) REFERENCES COLLECTION(id)
+);
+
+CREATE TABLE CARD_USER(
+    user_id INT NOT NULL,
+    card_id INT NOT NULL,
+    PRIMARY KEY (user_id,card_id),
+    FOREIGN KEY (user_id) REFERENCES USER(id),
+    FOREIGN KEY (card_id) REFERENCES CARD(id)
+);

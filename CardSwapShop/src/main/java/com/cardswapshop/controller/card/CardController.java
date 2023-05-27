@@ -32,6 +32,7 @@ public class CardController {
 
     private final CardService service;
 
+    //LLamada API para guardar una carta
     @PostMapping("")
     public ResponseEntity<CardRequest> saveCard(
             @RequestBody CardRequest card, @CurrentUser UserDetails currentUser
@@ -41,6 +42,7 @@ public class CardController {
         return new ResponseEntity<>(card, headers, HttpStatus.CREATED);
     }
 
+    //LLamada API para obtener las cartas guardadas en el sistema por el usuario en sesión
     @GetMapping("")
     public ResponseEntity<ListCardResponse> getMyCards(@CurrentUser UserDetails currentUser
     ) {
@@ -54,6 +56,8 @@ public class CardController {
         }
     }
 
+    //LLamada API para obtener todas las cartas que se encuantran en DB y poder filtrarlas por nombre pasado
+    // por queryparam
     @GetMapping("/all")
     public ResponseEntity<ListCardResponse> getAllCards(@RequestParam(required = false) String name
     ) {
@@ -78,6 +82,7 @@ public class CardController {
         }
     }
 
+    //LLamada API para obtener la carta por el id de esta pasado por pathparam
     @GetMapping("/{id}")
     public ResponseEntity<Card> getCard(@PathVariable("id") Long id) {
         return service.findById(id)
@@ -85,7 +90,7 @@ public class CardController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-
+    //LLamada API para actualizar la carta con id pasado por pathparam
     @PutMapping("/{id}")
     public ResponseEntity<CardRequest> updateCard(
             @PathVariable("id") Long id, @RequestBody CardRequest card,
@@ -105,6 +110,7 @@ public class CardController {
         return new ResponseEntity<>(card, HttpStatus.NO_CONTENT);
     }
 
+    //LLamada API para borrar carta con id pasado por pathparam
     @DeleteMapping("/{id}")
     public ResponseEntity<Card> deleteCard(
             @PathVariable("id") Long id
@@ -116,6 +122,7 @@ public class CardController {
         return new ResponseEntity<>(cardToDelete.get(), HttpStatus.NO_CONTENT);
     }
 
+    //LLamada API para obtener todas las cartas asociadas a la colección con id pasado por pathparam
     @GetMapping("/collection/{id}")
     public ResponseEntity<ListCardResponse> getAllCardsByCollectionId(@PathVariable("id") Long id) {
         ListCardResponse cards = service.findByCollectionId(id);

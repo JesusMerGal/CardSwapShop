@@ -19,6 +19,7 @@ public class AuthenticationController {
 
     private final AuthenticationService service;
 
+    //LLamada API para registrar al user
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
@@ -26,6 +27,7 @@ public class AuthenticationController {
        return ResponseEntity.ok(service.register(request));
     }
 
+    //LLamada API para login del user registrado
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
